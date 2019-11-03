@@ -1,0 +1,57 @@
+1 ---
+2 - name: Manajemen Multiple Container di Proxmox
+3   hosts: servers
+4   gather_facts: false
+5   vars:
+6      ct_ostemplate: centos-7-default_20171212_amd64.tar.xz
+7      ct_nameserver: 192.168.169.254
+8      ct_searchdomain: "ubg.local"
+9      ct_gateway: 192.168.169.254
+10     containers:
+11        - { vmid: 111, hostname: "server111.ubg.local", ctpassword: "12345678", ip_address: 192.168.169.111/24 }
+12        - { vmid: 112, hostname: "server112.ubg.local", ctpassword: "12345678", ip_address: 192.168.169.112/24 }
+13        - { vmid: 113, hostname: "server113.ubg.local", ctpassword: "12345678", ip_address: 192.168.169.113/24 }
+14  tasks:
+15    - name: include vars
+16      include_vars: pve_auth_vars.yml
+17      no_log: true
+18      tags: auth
+19
+20    - name: Membuat multiple container
+21      include_tasks: container.yml
+22      with_items: "{{ containers }}"
+23      tags: create
+24
+25    - name: Menghentikan multiple container
+26      proxmox:
+27         api_host: "{{ api_host }}"
+28         api_user: "{{ api_user }}"
+29         api_password: "{{ api_password }}"
+30         node: "{{ node }}"
+31         vmid: "{{ item.vmid }}"
+32         state: stopped      
+33      with_items: "{{ containers }}"
+34      tags: stop
+35
+36    - name: Menjalankan multiple container
+37      proxmox:
+38         api_host: "{{ api_host }}"
+39         api_user: "{{ api_user }}"
+40         api_password: "{{ api_password }}"
+41         node: "{{ node }}"
+42         vmid: "{{ item.vmid }}"
+43         state: started
+44      with_items: "{{ containers }}"
+45      tags: start
+46
+47    - name: Menghapus multiple container
+48      proxmox:
+49         api_host: "{{ api_host }}"
+50         api_user: "{{ api_user }}"
+51         api_password: "{{ api_password }}"
+52         node: "{{ node }}"
+53         vmid: "{{ item.vmid }}"
+54         state: absent
+55      with_items: "{{ containers }}"
+56      tags: delete
+57

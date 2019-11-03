@@ -1,0 +1,22 @@
+- name: Task Membuat Container Baru
+  proxmox:
+     api_host: "{{ api_host }}"
+     api_user: "{{ api_user }}"
+     api_password: "{{ api_password }}"
+     node: "{{ node }}"
+     vmid: "{{ item.vmid }}"
+     hostname: "{{ item.hostname }}"
+     password: "{{ item.ctpassword }}"
+     ostemplate: 'local:vztmpl/{{ ct_ostemplate }}'
+     cpus: 1
+     cpuunits: 500
+     memory: 512
+     swap: 512
+     disk: '5'
+     storage: local-lvm
+     nameserver: "{{ ct_nameserver }}"
+     searchdomain: "{{ ct_searchdomain }}"
+     netif: '{"net0":"name=eth0,gw={{ ct_gateway }},ip={{ item.ip_address}},bridge=vmbr0"}'
+     onboot: no
+     unprivileged: yes
+     state: present

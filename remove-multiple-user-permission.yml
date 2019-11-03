@@ -1,0 +1,5 @@
+- name: Menghapus Permission
+  command: pvesh set /access/acl -delete -path "{{ item.path }}" -users "{{ item.userid }}" -roles "{{ item.role }}"
+
+- name: Menghapus User
+  command: pvesh delete /access/users/"{{ item.userid }}"

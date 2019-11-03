@@ -1,0 +1,7 @@
+- name: Membuat User
+  command: pvesh create /access/users -userid "{{ item.userid }}" -password "{{ item.password }}" -firstname "{{ item.firstname }}" -lastname "{{ item.lastname }}" -comment "{{ item.comment }}"
+  with_items: "{{ user_permissions }}"
+  
+- name: Membuat Permission
+  command: pvesh set /access/acl -path "{{ item.path }}" -users "{{ item.userid }}" -roles "{{ item.role }}"
+  with_items: "{{ user_permissions }}"

@@ -1,0 +1,17 @@
+---
+- name: Manajemen Container Template di PVE
+  hosts: servers
+  vars:
+     api_host: pve
+     api_user: root@pam
+     api_password: '12345678'
+     node: pve
+  tasks:
+  - name: Hapus Container Template
+    proxmox_template:
+       api_host: "{{ api_host }}"
+       api_user: "{{ api_user }}"
+       api_password: "{{ api_password }}"
+       node: "{{ node }}"
+       template: centos-8-default_20191016_amd64.tar.xz
+       state: absent

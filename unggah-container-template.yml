@@ -1,0 +1,11 @@
+---
+- name: Manajemen Container Template di PVE
+  hosts: servers
+  tasks:
+  - name: Unggah Container Template
+    proxmox_template:
+       api_host: pve
+       api_user: root@pam
+       api_password: '12345678'
+       node: pve
+       src: ~/centos-8-default_20191016_amd64.tar.xz

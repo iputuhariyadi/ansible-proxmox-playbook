@@ -1,0 +1,4 @@
+api_host: pve
+api_user: root@pam
+api_password: '12345678'
+node: pve

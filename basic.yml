@@ -1,0 +1,8 @@
+---
+- name: Dasar YAML
+  hosts: servers
+  vars:
+    pesan: "Hello World"
+  tasks:
+  - name: Menampilkan Variable
+    debug: var=pesan

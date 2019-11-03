@@ -1,0 +1,25 @@
+---
+- name: Manajemen Container Template di PVE
+  hosts: servers
+  tasks:
+  - name: include vars
+    include_vars: pve_auth_vars.yml
+
+  - name: Unggah Container Template
+    proxmox_template:
+       api_host: "{{ api_host }}"
+       api_user: "{{ api_user }}"
+       api_password: "{{ api_password }}"
+       node: "{{ node }}"
+       src: ~/centos-8-default_20191016_amd64.tar.xz
+    tags: unggah
+
+  - name: Hapus Container Template
+    proxmox_template:
+       api_host: "{{ api_host }}"
+       api_user: "{{ api_user }}"
+       api_password: "{{ api_password }}"
+       node: "{{ node }}"
+       template: centos-8-default_20191016_amd64.tar.xz
+       state: absent
+    tags: hapus

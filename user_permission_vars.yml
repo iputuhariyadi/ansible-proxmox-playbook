@@ -1,0 +1,4 @@
+user_permissions:
+   - { userid: luna@pve, password: "12345678", firstname: "Luna", lastname: "Maya", comment: "Ilkom 2019", path: "/vms/111", role: "PVEVMUser"  }
+   - { userid: ayu@pve, password: "12345678", firstname: "Ayu", lastname: "Tingting", comment: "RPL 2019", path: "/vms/112", role: "PVEVMAdmin"  }
+   - { userid: via@pve, password: "12345678", firstname: "Via", lastname: "Vallen", comment: "TI 2019", path: "/vms/113", role: "PVEVMUser"  }

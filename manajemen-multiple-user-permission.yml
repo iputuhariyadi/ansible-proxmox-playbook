@@ -1,0 +1,24 @@
+---
+- name: Manajemen User dan Permission di PVE
+  hosts: servers
+  gather_facts: false
+  vars:
+     new_password: "qwerty"
+  tasks:
+  - name: include vars
+    include_vars: user_permission_vars.yml
+
+  - name: Membuat User dan Permission
+    include_tasks: add-multiple-user-permission.yml
+    with_items: "{{ user_permissions }}"
+    tags: add
+
+  - name: Menghapus Permission dan User
+    include_tasks: remove-multiple-user-permission.yml
+    with_items: "{{ user_permissions }}"
+    tags: remove
+
+  - name: Reset Semua Password User
+    command: pvesh set /access/password --userid "{{ item.userid }}" --password "{{ new_password }}"
+    with_items: "{{ user_permissions }}"
+    tags: reset
